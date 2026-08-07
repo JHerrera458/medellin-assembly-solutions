@@ -10,33 +10,74 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AsambleasRouteImport } from './routes/asambleas'
+import { Route as ContactoRouteImport } from './routes/contacto'
+import { Route as FacturacionRouteImport } from './routes/facturacion'
+import { Route as NosotrosRouteImport } from './routes/nosotros'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AsambleasRoute = AsambleasRouteImport.update({
+  id: '/asambleas',
+  path: '/asambleas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactoRoute = ContactoRouteImport.update({
+  id: '/contacto',
+  path: '/contacto',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FacturacionRoute = FacturacionRouteImport.update({
+  id: '/facturacion',
+  path: '/facturacion',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NosotrosRoute = NosotrosRouteImport.update({
+  id: '/nosotros',
+  path: '/nosotros',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/asambleas': typeof AsambleasRoute
+  '/contacto': typeof ContactoRoute
+  '/facturacion': typeof FacturacionRoute
+  '/nosotros': typeof NosotrosRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/asambleas': typeof AsambleasRoute
+  '/contacto': typeof ContactoRoute
+  '/facturacion': typeof FacturacionRoute
+  '/nosotros': typeof NosotrosRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/asambleas': typeof AsambleasRoute
+  '/contacto': typeof ContactoRoute
+  '/facturacion': typeof FacturacionRoute
+  '/nosotros': typeof NosotrosRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/asambleas' | '/contacto' | '/facturacion' | '/nosotros'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/asambleas' | '/contacto' | '/facturacion' | '/nosotros'
+  id:
+    '__root__' | '/' | '/asambleas' | '/contacto' | '/facturacion' | '/nosotros'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AsambleasRoute: typeof AsambleasRoute
+  ContactoRoute: typeof ContactoRoute
+  FacturacionRoute: typeof FacturacionRoute
+  NosotrosRoute: typeof NosotrosRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +89,44 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/asambleas': {
+      id: '/asambleas'
+      path: '/asambleas'
+      fullPath: '/asambleas'
+      preLoaderRoute: typeof AsambleasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contacto': {
+      id: '/contacto'
+      path: '/contacto'
+      fullPath: '/contacto'
+      preLoaderRoute: typeof ContactoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/facturacion': {
+      id: '/facturacion'
+      path: '/facturacion'
+      fullPath: '/facturacion'
+      preLoaderRoute: typeof FacturacionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nosotros': {
+      id: '/nosotros'
+      path: '/nosotros'
+      fullPath: '/nosotros'
+      preLoaderRoute: typeof NosotrosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AsambleasRoute: AsambleasRoute,
+  ContactoRoute: ContactoRoute,
+  FacturacionRoute: FacturacionRoute,
+  NosotrosRoute: NosotrosRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
